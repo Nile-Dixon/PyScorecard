@@ -11,7 +11,7 @@ class PyScorecard:
 		self.current_page = -1
 		self.per_page = 20
 		self.total_results = -1
-		self.sort = None
+		self.sort_by = None
 		self.geofilter = {
 			'zip_code' : None,
 			'distance' : None
@@ -63,16 +63,17 @@ class PyScorecard:
 		This function allows you to add a sort value to a data request.
 		'''
 		if field not in self.fields:
-			error_message = "This field {} was not added. In order to sort, you must add the field using the add_field or add_fields method."
+			error_message = "This field {} was not added. In order to sort, you must add the field using the add_field or add_fields method.".format(field)
 			raise PyScorecardException(error_message)
-		self.sort = "{}:{}".format(field, order_by)
+		self.sort_by = "{}:{}".format(field, order_by)
 
 	def add_geofilter(self, zip_code, distance, metric = "mi"):
 		'''
 		This function allows you to add a geo-filter to a data request.
 		'''
 		self.geofilter['zip_code'] = zip_code
-		self.geofilter['distance'] = "{}{}".format(distance, metric)
+		if distance != None:
+			self.geofilter['distance'] = "{}{}".format(distance, metric)
 	
 	def fetch(self):
 		'''
@@ -110,13 +111,24 @@ class PyScorecard:
 		if self.per_page != 20:
 			url += "&per_page={}".format(self.per_page)
 
+		#Set the sort parameter for the url if the self.sort_by != None
+		if self.sort_by != None:
+			url += "&sort={}".format(self.sort_by)
+
+		#Set the 
+		if self.geofilter['zip_code'] != None:
+			url += "&zip={}".format(self.geofilter['zip_code'])
+
+		if self.geofilter['distance'] != None:
+			url += "&distance={}".format(self.geofilter['distance'])
+
 		#Make request to API
 		resp = requests.get(url)
 		data = resp.json()
 
 		#Return errors to user if invalid search
 		if 'errors' in data:
-			error_message = ""
+			error_message = "\n"
 			for error in data['errors']:
 				error_message += "{} \n".format(error['message'])
 			
