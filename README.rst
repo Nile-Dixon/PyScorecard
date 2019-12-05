@@ -1,32 +1,41 @@
-# PyScorecard
+PyScorecard
+===========
 
-PyScorecard is an unofficial Python library for interacting with the US Department of Education's College Scorecard API.
+PyScorecard is an unofficial Python library for interacting with the US
+Department of Education’s College Scorecard API.
 
-## Installation
+Installation
+------------
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install PyScorecard.
+Use the package manager `pip`_ to install PyScorecard.
 
-```bash
-pip install PyScorecard
-```
+.. code:: bash
 
-## Usage
+   pip install PyScorecard
 
-```python
-from PyScorecard import PyScorecard
+Usage
+-----
 
-scorecard = PyScorecard()
-scorecard.set_api_key("YOUR_API_KEY_HERE")
-scorecard.set_year("2015")
+.. code:: python
 
-scorecard.add_filter("school.degrees_awarded.predominant","=",["2","3"])
+   from PyScorecard import PyScorecard
 
-scorecard.add_field("school.name")
-scorecard.add_field("ope6_id")
-scorecard.add_fields(["cost.tuition.in_state","cost.tuition.out_of_state"])
+   scorecard = PyScorecard()
+   scorecard.set_api_key("YOUR_API_KEY_HERE")
+   scorecard.set_year("2015")
 
-data = scorecard.fetch_all()
-```
+   scorecard.add_filter("school.degrees_awarded.predominant","=",["2","3"])
 
-## License
-[GNU GPL-V2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt)
+   scorecard.add_field("school.name")
+   scorecard.add_field("ope6_id")
+   scorecard.add_fields(["cost.tuition.in_state","cost.tuition.out_of_state"])
+
+   data = scorecard.fetch_all()
+
+License
+-------
+
+`GNU GPL-V2`_
+
+.. _pip: https://pip.pypa.io/en/stable/
+.. _GNU GPL-V2: https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt

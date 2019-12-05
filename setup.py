@@ -10,5 +10,5 @@ setup(
 	version='0.1',
 	license='MIT',
 	description='An unofficial API wrapper for the College Scorecard API.',
-	long_description=open('README.md').read(),
+	long_description=open('README.rst').read(),
 )
